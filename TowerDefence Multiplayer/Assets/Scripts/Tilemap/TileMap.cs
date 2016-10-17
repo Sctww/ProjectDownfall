@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class TileMap : MonoBehaviour
+public class TileMap : NetworkBehaviour
 {
     #region Map Node Fields
     [Header("Map Generation Stuff")]
@@ -95,7 +96,9 @@ public class TileMap : MonoBehaviour
             {
                 TileType tt = tileTypes[tiles[x, y]];
 
-                Instantiate(tt.tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
+                GameObject go = Instantiate(tt.tilePrefab, new Vector3(x-mapSizeX/2, 0, y-mapSizeY/2), Quaternion.identity) as GameObject;
+
+                go.transform.parent = this.transform;
             }
         }
     }
